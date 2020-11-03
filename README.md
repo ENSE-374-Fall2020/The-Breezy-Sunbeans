@@ -31,7 +31,7 @@ Assignment 1 Vlog - https://www.youtube.com/watch?v=Hoovx5IwJIo&feature=youtu.be
 Assignment 2 Vlog - https://youtu.be/-zuP8JCH5BA
 
 # Files
-##Project Activity #2
+## Project Activity #2
   Business Case.docx
   Envisioned and rationalized MVPs.docx
   PROJECT CHARTER.docx
