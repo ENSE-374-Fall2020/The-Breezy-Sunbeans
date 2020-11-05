@@ -29,3 +29,5 @@ The need to socialize remotely has never been greater
 Assignment 1 Vlog - https://www.youtube.com/watch?v=Hoovx5IwJIo&feature=youtu.be
 
 Assignment 2 Vlog - https://youtu.be/-zuP8JCH5BA
+
+Assignment 3 Vlog - https://www.youtube.com/watch?v=G6JnYQMgskw&feature=youtu.be
