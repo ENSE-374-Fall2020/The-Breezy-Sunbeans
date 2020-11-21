@@ -168,6 +168,19 @@ app.get("/profile", function(req, res){
 
 });
 
+// updateProfile route
+app.post("/updateProfile", function(req, res) {
+    console.log("Updating a user");
+    console.log("user is: " + req.body.username + " name: " + req.body.name + " age: " + req.body.age + " city: " + req.body.city + " description: " + req.body.description)
+    var query = {"username" : req.body.username};
+    var updates = { $set : {name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description}};
+    User.updateOne(query, updates, function(err, res) {
+            if (err) throw err;
+        }
+    )
+    res.redirect("/profile");
+});
+
 // show the messaging page
 app.get("/messaging", function(req, res){
     console.log("A user is accessing messaging")

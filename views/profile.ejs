@@ -46,25 +46,29 @@
 
 
     <div class="centered" style="background-color: #eee;">
+        <form class="form-update" action="/updateProfile" method="POST">
+        <input type="hidden" id="inputUserame" class="form-control" value="<%= user %>" required name="username">
         <div class="card">
             <div class="card-body">
               <h4 class="card-title"><%= userInfo.name %></h4>
+              <input type="hidden" id="inputName" class="form-control" placeholder="Your name" value="<%= userInfo.name %>" required name="name">
               <h6 class="card-subtitle mb-2 text-muted">My age:</h6>
               <p class="card-text">
-                <%= userInfo.age %>
+                <input type="text" id="inputAge" class="form-control" placeholder="Your age" value="<%= userInfo.age %>" required name="age">
               </p>
               <h6 class="card-subtitle mb-2 text-muted">My city:</h6>
               <p class="card-text">
-                <%= userInfo.city %>
+                <input type="text" id="inputCity" class="form-control" placeholder="City you live in" value="<%= userInfo.city %>" required name="city">
               </p>
               <h6 class="card-subtitle mb-2 text-muted">My description:</h6>
               <p class="card-text">
-                <%= userInfo.description %>
+                <input type="text" id="inputDescription" class="form-control" placeholder="A short description of yourself!" value="<%= userInfo.description %>" required name="description">
               </p>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Update Profile</button>
             </div>
           </div>
+        </form>
     </div>
-
   
 
 
