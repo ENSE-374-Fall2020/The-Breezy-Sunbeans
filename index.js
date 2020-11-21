@@ -64,8 +64,8 @@ const Message = new mongoose.model("Message", messageSchema)
 
 //Schema for meetings
 const meetingSchema = new mongoose.Schema ({
-    user1: String,
-    user2: String,
+    username1: String,
+    username2: String,
     date: Date, //Date("<YYYY-mm-ddTHH:MM:ss>")
     description: String
 });
