@@ -53,13 +53,24 @@ userSchema.plugin(passportLocalMongoose);
 // Collection of users
 const User = new mongoose.model("User", userSchema)
 
+//Schema for messages
 const messageSchema = new mongoose.Schema ({
-    owner: String,
-    //to: String,
-    //from: String,
+    to: String,
+    from: String,
     message: String,
 });
+//collection of messages
 const Message = new mongoose.model("Message", messageSchema)
+
+//Schema for meetings
+const meetingSchema = new mongoose.Schema ({
+    user1: String,
+    user2: String,
+    date: Date, //Date("<YYYY-mm-ddTHH:MM:ss>")
+    description: String
+});
+//collection of meetings
+const Meeting = new mongoose.model("Meeting", meetingSchema)
 
 
 

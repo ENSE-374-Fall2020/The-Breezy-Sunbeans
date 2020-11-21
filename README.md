@@ -1,6 +1,6 @@
 git remote add TheBreezySunbeans https://github.com/dhruvkmodi/ENSE374_TheBreezySunbeans.git
 git branch -M main <- to make the main branch
-git push -u TheBreezySunbeans main <-push the branch to remote
+git push -u TheBreezySunbeans main <-push the branch to remote (repository-name)
 git checkout main <- pull the main branch from remote
 
 database is oceanDB
