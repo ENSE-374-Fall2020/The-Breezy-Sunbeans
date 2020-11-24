@@ -54,13 +54,15 @@ userSchema.plugin(passportLocalMongoose);
 const User = new mongoose.model("User", userSchema)
 
 //Schema for messages
-const messageSchema = new mongoose.Schema ({
-    to: String,
-    from: String,
+const messageSchema = new mongoose.Schema({
+    _id: Number,
+    to: userSchema,
+    from: userSchema,
     message: String,
+    creator: userSchema
 });
-//collection of messages
-const Message = new mongoose.model("Message", messageSchema)
+
+const Message = mongoose.model("Message", messageSchema);
 
 //Schema for meetings
 const meetingSchema = new mongoose.Schema ({
@@ -299,13 +301,40 @@ app.post("/updateProfile", function(req, res) {
 
 
 // show the messaging page
-app.get("/messaging", function(req, res){
-    console.log("A user is accessing messaging")
+app.get("/messaging", function (req, res) {
     if (req.isAuthenticated()) {
-        res.render("messaging", {user: req.user.username})    
+        var messageArray = [];
+
+        Message.find({}, (err, message) => {
+            if (err) {
+
+            } else {
+                message.forEach((Message) => {
+                    messageArray.push(Message);
+                })
+            }
+            res.render("messaging", {
+                username: req.user.username,
+                message: messageArray
+            })
+            console.log(message)
+            
+        })
     } else {
         res.redirect("/");
     }
-
 });
 
+app.post("/send", function (req, res) {
+
+    console.log(req.body.messagelength)
+    Message.create({
+        _id: req.body.messagelength,
+        message: req.body.input,
+        creator: req.user
+    }, function () {
+        req.body.messagelength++;
+        console.log(req.body.messagelength)
+        res.redirect('/messaging');
+    });
+});
