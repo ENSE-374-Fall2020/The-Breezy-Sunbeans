@@ -89,14 +89,16 @@ app.listen (port, function() {
     console.log("Server is running on port " + port);
 })
 
-// root route
+// root route, shows the home page
 app.get("/", function(req, res){
     res.render("home/home")
 });
 
+//show login/register page
 app.get("/login", function(req, res){
     res.render("login")
 });
+
 // register route
 app.post("/register", function(req, res) {
     console.log("Registering a new user");

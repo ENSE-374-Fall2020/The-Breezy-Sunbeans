@@ -11,12 +11,11 @@ database is oceanDB
 
 User database
     Add photos functionality?
-    We took out the profile page to edit your profile
 
 Messaging:
     Add a way to select a user to send a message to
     Page to show messages with a specific user
-    Message overview needs functionality
     
 Meetings database
     Explore meetings has no funcitonality 
+    Need a new to add a user to a meeting
