@@ -19,5 +19,4 @@ Messaging:
     Message overview needs functionality
     
 Meetings database
-    Should there be a hiking/walk/movie caetory added to the meetings database
     Explore meetings has no funcitonality 

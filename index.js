@@ -91,9 +91,12 @@ app.listen (port, function() {
 
 // root route
 app.get("/", function(req, res){
-    res.render("login")
+    res.render("home/home")
 });
 
+app.get("/login", function(req, res){
+    res.render("login")
+});
 // register route
 app.post("/register", function(req, res) {
     console.log("Registering a new user");
