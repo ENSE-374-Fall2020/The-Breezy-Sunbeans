@@ -66,7 +66,7 @@ const Message = new mongoose.model("Message", messageSchema)
 const meetingSchema = new mongoose.Schema ({
     username1: String,
     username2: String,
-    date: Date, //Date("<YYYY-mm-ddTHH:MM:ss>")
+    date: String, //Date("<YYYY-mm-ddTHH:MM:ss>")
     description: String
 });
 //collection of meetings
@@ -148,16 +148,121 @@ app.get("/logout", function(req, res){
     res.redirect("/");
 })
 
-// show the home page
+// show the dashboard
 app.get("/dashboard", function(req, res){
     console.log("A user is accessing dashboard")
     if (req.isAuthenticated()) {
-        res.render("dashboard", {user: req.user.username})    
+        var query = {username1: req.user.username}
+        Meeting.find(query, function(err, results){
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(results)
+                myMeetings = results
+            }
+            res.render("dashboard", {user: req.user.username, meetings: myMeetings})  
+        })  
     } else {
         res.redirect("/");
     }
-
 });
+
+//meeting edit route
+app.post("/meetingEdit", function(req, res){
+    console.log("A user is about to edit a meeting")
+
+   req.session.valid = req.body._id
+   res.redirect("/meeting_edit");
+});
+
+//meeting create route
+app.post("/meetingCreate", function(req, res){
+    console.log("A user is accessing creating a meeting")
+    var inserts = {
+        username1: req.user.username,
+        username2: "",
+        date: "2020-01-01T12:00", //Date("<YYYY-mm-ddTHH:MM:ss>")
+        description: ""
+    }
+    Meeting.create(inserts, function(err, results) {
+        if (err) {
+            // failure
+            console.log(err);
+        } else {
+            // success
+            console.log(results)
+            var meeting_id = results._id
+            req.session.valid = meeting_id;
+            res.redirect("/meeting_edit");
+        }
+    });
+});
+
+// show the meeting edit page. Must have a meeting id in req.session.valid
+app.get("/meeting_edit", function(req, res){
+    console.log("A user is accessing meeting edit")
+    if (req.isAuthenticated()) {
+        if (req.session.valid){
+            var meeting_id = req.session.valid
+            req.session.valid = null
+
+            var query = {"_id" : meeting_id};
+            Meeting.find(query, function(err, results) {
+                if (err) {
+                    // failure
+                    console.log(err);
+                } else {
+                    // success
+                    console.log(results)
+                    meeting = results[0]
+                }
+                res.render("meeting_edit", {user: meeting.username1, username2: meeting.username2, description: meeting.description, date: meeting.date, _id: meeting._id})   
+            })
+        } else {
+            res.redirect("/");
+        }
+    } else {
+        res.redirect("/");
+    }
+    req.session.valid = null
+});
+
+// updateMeeting route
+app.post("/updateMeeting", function(req, res) {
+    console.log("Updating a meeting");
+    console.log("user1 is: " + req.body.username + " username2: " + req.body.username2 + " description: " + req.body.description + " date: " + req.body.date)
+    var query = {"_id": req.body._id};
+    var updates = { $set : {username1: req.body.username, username2: req.body.username2, description: req.body.description, date: req.body.date}};
+
+    Meeting.updateOne(query, updates, function(err, results) {
+        if (err) {
+            // failure
+            console.log(err);
+        } else {
+            // success
+            console.log(results)
+        }
+    })
+    res.redirect("/dashboard");
+});
+
+// deleteMeeting route
+app.post("/deleteMeeting", function(req, res) {
+    console.log("Deleteing a meeting");
+    var query = {"_id": req.body._id};
+
+    Meeting.deleteOne(query, function(err, results) {
+        if (err) {
+            // failure
+            console.log(err);
+        } else {
+            // success
+            console.log(results)
+        }
+    })
+    res.redirect("/dashboard");
+});
+
 
 // show the profile page
 app.get("/profile", function(req, res){
@@ -192,6 +297,7 @@ app.post("/updateProfile", function(req, res) {
     res.redirect("/profile");
 });
 
+
 // show the messaging page
 app.get("/messaging", function(req, res){
     console.log("A user is accessing messaging")
@@ -202,3 +308,4 @@ app.get("/messaging", function(req, res){
     }
 
 });
+

@@ -24,14 +24,14 @@
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/profile">My Profile</a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/messaging">My Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">My Profile</a>
             </li>
           </ul>
           <div class="float-right">Logged in as <%= user%></div>
@@ -46,32 +46,36 @@
 
 
     <div class="centered" style="background-color: #eee;">
-        <form class="form-update" action="/updateProfile" method="POST">
+        <form class="form-update" action="/updateMeeting" method="POST">
         <input type="hidden" id="inputUserame" class="form-control" value="<%= user %>" required name="username">
+        <input type="hidden" id="inputUserame2" class="form-control" value="<%= username2 %>" required name="username2">
+        <input type="hidden" id="inputId" class="form-control" value="<%= _id %>" required name="_id">
         <div class="card">
             <div class="card-body">
-              <h4 class="card-title"><%= userInfo.name %></h4>
-              <input type="hidden" id="inputName" class="form-control" placeholder="Your name" value="<%= userInfo.name %>" required name="name">
-              <h6 class="card-subtitle mb-2 text-muted">My age:</h6>
+                <% if(username2 == ""){ %>
+                <h4 class="card-title">Meeting between <%= user %> and ---</h4>
+                <% } else { %>
+                <h4 class="card-title">Meeting between <%= user %> and <%= username2 %></h4>
+                <% } %>
+              <h6 class="card-subtitle mb-2 text-muted">Description</h6>
               <p class="card-text">
-                <input type="text" id="inputAge" class="form-control" placeholder="Your age" value="<%= userInfo.age %>" required name="age">
+                <input type="text" id="inputDescription" class="form-control" placeholder="A short description of your meeting!" value="<%= description %>" required name="description">
               </p>
-              <h6 class="card-subtitle mb-2 text-muted">My city:</h6>
+              <h6 class="card-subtitle mb-2 text-muted">Date:</h6>
               <p class="card-text">
-                <input type="text" id="inputCity" class="form-control" placeholder="City you live in" value="<%= userInfo.city %>" required name="city">
+                <input type="datetime-local" id="inputDate" class="form-control" value="<%= date %>" required name="date">
               </p>
-              <h6 class="card-subtitle mb-2 text-muted">My description:</h6>
-              <p class="card-text">
-                <input type="text" id="inputDescription" class="form-control" placeholder="A short description of yourself!" value="<%= userInfo.description %>" required name="description">
-              </p>
-              <p class="card-text">
-                <input type="datetime-local" id="inputDate" class="form-control" value="2020-11-15T08:38" required name="date">
-              </p>
-              <button class="btn btn-secondary btn-block" type="submit">Update Profile</button>
+              <button class="btn btn-secondary btn-block" type="submit">Submit</button>
             </div>
           </div>
         </form>
+        <form action="/deleteMeeting" method="POST">
+          <input type="hidden" id="inputId" class="form-control" value="<%= _id %>" required name="_id">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
     </div>
+
+
   
 
 

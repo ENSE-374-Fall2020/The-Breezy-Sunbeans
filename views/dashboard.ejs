@@ -48,10 +48,19 @@
     <div class="d-flex" style="background-color: #eee;">
         <div class="p-2 w-100 flex-fill">
             <h4 class="card-title">My Meetings</h4>
-            <div class="alert alert-dark">
-                <strong>Oct 25</strong> Hiking trip with ____
-            </div>
-
+            <% for (var i=0; i<meetings.length;i++){ %>
+                <div class="alert alert-dark">
+                    <strong> <%= meetings[0].date %></strong> <%= meetings[0].description %> with <% if(meetings[0].username2 == ""){ %>
+                            <div id="username2">--</div>
+                        <% } else { %>
+                            <div id="username2"><%= meetings[0].username2 %></div>
+                        <% } %>
+                    <form class="centred" action="/meetingEdit" method="POST">
+                        <input type="hidden" id="inputId" class="form-control" value="<%= meetings[0]._id %>" required name="_id">
+                        <button class="btn btn-secondary" type="submit">Edit</button>
+                    </form>
+                </div>
+            <% } %>
             <div class="alert alert-dark">
                 <strong>Nov 1</strong> Walk with ____
             </div>
@@ -77,7 +86,13 @@
         </div>
     </div>
 
-  
+    <form class="centred" action="/meetingCreate" method="POST">
+        <!-- <input type="hidden" id="inputUsername" class="form-control" value="<%= user %>" required name="username">
+        <input type="hidden" id="inputUsername2" class="form-control" value="" required name="username2">
+        <input type="hidden" id="inputDescription" class="form-control" value="" required name="description">
+        <input type="hidden" id="inputDate" class="form-control" value="2020-01-01T12:00" required name="date"> -->
+        <button class="btn btn-secondary" type="submit">Create a Meeting</button>
+    </form>
 
 
 
