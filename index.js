@@ -66,6 +66,7 @@ const Message = mongoose.model("Message", messageSchema);
 
 //Schema for meetings
 const meetingSchema = new mongoose.Schema ({
+    type: String,
     username1: String,
     username2: String,
     date: String, //Date("<YYYY-mm-ddTHH:MM:ss>")
@@ -181,6 +182,7 @@ app.post("/meetingEdit", function(req, res){
 app.post("/meetingCreate", function(req, res){
     console.log("A user is accessing creating a meeting")
     var inserts = {
+        type: "",
         username1: req.user.username,
         username2: "",
         date: "2020-01-01T12:00", //Date("<YYYY-mm-ddTHH:MM:ss>")
@@ -192,7 +194,7 @@ app.post("/meetingCreate", function(req, res){
             console.log(err);
         } else {
             // success
-            console.log(results)
+            //console.log(results)
             var meeting_id = results._id
             req.session.valid = meeting_id;
             res.redirect("/meeting_edit");
@@ -215,10 +217,10 @@ app.get("/meeting_edit", function(req, res){
                     console.log(err);
                 } else {
                     // success
-                    console.log(results)
+                    //console.log(results)
                     meeting = results[0]
                 }
-                res.render("meeting_edit", {user: meeting.username1, username2: meeting.username2, description: meeting.description, date: meeting.date, _id: meeting._id})   
+                res.render("meeting_edit", {user: meeting.username1, type: meeting.type, username2: meeting.username2, description: meeting.description, date: meeting.date, _id: meeting._id})   
             })
         } else {
             res.redirect("/");
@@ -232,9 +234,9 @@ app.get("/meeting_edit", function(req, res){
 // updateMeeting route
 app.post("/updateMeeting", function(req, res) {
     console.log("Updating a meeting");
-    console.log("user1 is: " + req.body.username + " username2: " + req.body.username2 + " description: " + req.body.description + " date: " + req.body.date)
+    //console.log("user1 is: " + req.body.username + " username2: " + req.body.username2 + " description: " + req.body.description + " date: " + req.body.date)
     var query = {"_id": req.body._id};
-    var updates = { $set : {username1: req.body.username, username2: req.body.username2, description: req.body.description, date: req.body.date}};
+    var updates = { $set : {type: req.body.type, username1: req.body.username, username2: req.body.username2, description: req.body.description, date: req.body.date}};
 
     Meeting.updateOne(query, updates, function(err, results) {
         if (err) {
@@ -242,7 +244,7 @@ app.post("/updateMeeting", function(req, res) {
             console.log(err);
         } else {
             // success
-            console.log(results)
+            //console.log(results)
         }
     })
     res.redirect("/dashboard");

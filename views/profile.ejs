@@ -24,15 +24,15 @@
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/profile">My Profile</a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/messaging">My Messages</a>
             </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/profile">My Profile</a>
+          </li>
           </ul>
           <div class="float-right">Logged in as <%= user%></div>
           <div class="float-right">
@@ -63,9 +63,6 @@
               <h6 class="card-subtitle mb-2 text-muted">My description:</h6>
               <p class="card-text">
                 <input type="text" id="inputDescription" class="form-control" placeholder="A short description of yourself!" value="<%= userInfo.description %>" required name="description">
-              </p>
-              <p class="card-text">
-                <input type="datetime-local" id="inputDate" class="form-control" value="2020-11-15T08:38" required name="date">
               </p>
               <button class="btn btn-secondary btn-block" type="submit">Update Profile</button>
             </div>

@@ -11,6 +11,7 @@ database is oceanDB
 
 User database
     Add photos functionality?
+    We took out the profile page to edit your profile
 
 Messaging:
     Add a way to select a user to send a message to

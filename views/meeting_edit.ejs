@@ -57,6 +57,10 @@
                 <% } else { %>
                 <h4 class="card-title">Meeting between <%= user %> and <%= username2 %></h4>
                 <% } %>
+              <h6 class="card-subtitle mb-2 text-muted">Type</h6>
+              <p class="card-text">
+                <input type="text" id="inputType" class="form-control" placeholder="What type of meeting is this?" value="<%= type %>" required name="type">
+              </p>
               <h6 class="card-subtitle mb-2 text-muted">Description</h6>
               <p class="card-text">
                 <input type="text" id="inputDescription" class="form-control" placeholder="A short description of your meeting!" value="<%= description %>" required name="description">

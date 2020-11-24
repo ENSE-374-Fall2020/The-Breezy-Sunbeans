@@ -33,6 +33,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/messaging">My Messages</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">My Profile</a>
+            </li>
           </ul>
           <div class="float-right">Logged in as <%= user%></div>
           <div class="float-right">
@@ -50,23 +53,29 @@
             <h4 class="card-title">My Meetings</h4>
             <% for (var i=0; i<meetings.length;i++){ %>
                 <div class="alert alert-dark">
-                    <strong> <%= meetings[0].date %></strong> <%= meetings[0].description %> with <% if(meetings[0].username2 == ""){ %>
-                            <div id="username2">--</div>
-                        <% } else { %>
-                            <div id="username2"><%= meetings[0].username2 %></div>
-                        <% } %>
-                    <form class="centred" action="/meetingEdit" method="POST">
-                        <input type="hidden" id="inputId" class="form-control" value="<%= meetings[0]._id %>" required name="_id">
-                        <button class="btn btn-secondary" type="submit">Edit</button>
-                    </form>
+                    <div class="media text-muted pt-3">
+                       <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                            <strong class="d-block text-gray-dark"><%= meetings[0].type %></strong>
+                            <%= meetings[0].date %> <!-- This prints out the date, unformatted -->
+                            <% if (!meetings[0].username2 == ""){ %> <!-- This will only display a second user if there is one  -->
+                                , with <%= meetings[0].username2 %>
+                            <% } %>
+                            <form class="centred" action="/meetingEdit" method="POST">
+                                <input type="hidden" id="inputId" class="form-control" value="<%= meetings[0]._id %>" required name="_id">
+                                <button class="btn btn-secondary" type="submit">Edit</button>
+                            </form>
+                       </p>
+                    </div>
                 </div>
+
             <% } %>
             <div class="alert alert-dark">
                  <div class="media text-muted pt-3">
                     <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                       <strong class="d-block text-gray-dark">Hiking</strong>
-                     Oct 25
+                     Oct 25 (fake)
                     </p>
                   </div>
             </div>
@@ -76,7 +85,7 @@
                     <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                       <strong class="d-block text-gray-dark">Walk</strong>
-                     Nov 1
+                     Nov 1 (fake)
                     </p>
                 </div>
             </div>
@@ -86,13 +95,9 @@
                     <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                       <strong class="d-block text-gray-dark">Baseball</strong>
-                     Nov 20
+                     Nov 20 (fake)
                     </p>
                 </div>
-            </div>
-
-            <div class="alert alert-dark">
-                Clicking on a meeting should bring you to a page to view the meeting information
             </div>
         </div>
 
@@ -103,7 +108,7 @@
                     <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                       <strong href="/" class="d-block text-gray-dark">Hiking</strong>
-                     Oct 25
+                     Oct 25 (fake)
                     </p>
                   </div>
             </div>
@@ -113,7 +118,7 @@
                     <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                       <strong class="d-block text-gray-dark">Clubing</strong>
-                     Oct 25
+                     Oct 25 (fake)
                     </p>
                   </div>
             </div>
