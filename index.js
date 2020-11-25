@@ -165,7 +165,7 @@ app.get("/dashboard", function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                console.log(results)
+                //console.log(results)
                 myMeetings = results
             }
             res.render("dashboard", {user: req.user.username, meetings: myMeetings})  
@@ -266,12 +266,21 @@ app.post("/deleteMeeting", function(req, res) {
             console.log(err);
         } else {
             // success
-            console.log(results)
+            //console.log(results)
         }
     })
     res.redirect("/dashboard");
 });
 
+// show the meetup page
+app.get("/meetup", function(req, res){
+    console.log("A user is accessing meetup")
+    if (req.isAuthenticated()) {
+        res.render("meetup", {user: req.user.username})   
+    } else {
+        res.redirect("/");
+    }
+});
 
 // show the profile page
 app.get("/profile", function(req, res){
@@ -281,7 +290,7 @@ app.get("/profile", function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                console.log(results)
+                //console.log(results)
                 userInfo = results[0];
 
             }
@@ -296,7 +305,7 @@ app.get("/profile", function(req, res){
 // updateProfile route
 app.post("/updateProfile", function(req, res) {
     console.log("Updating a user");
-    console.log("user is: " + req.body.username + " name: " + req.body.name + " age: " + req.body.age + " city: " + req.body.city + " description: " + req.body.description)
+    //console.log("user is: " + req.body.username + " name: " + req.body.name + " age: " + req.body.age + " city: " + req.body.city + " description: " + req.body.description)
     var query = {"username" : req.body.username};
     var updates = { $set : {name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description}};
     User.updateOne(query, updates, function(err, res) {
