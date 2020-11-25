@@ -160,19 +160,27 @@ app.get("/logout", function(req, res){
 app.get("/dashboard", function(req, res){
     console.log("A user is accessing dashboard")
     if (req.isAuthenticated()) {
-        var query = {username1: req.user.username}
-        Meeting.find(query, function(err, results){
+        //var query = {username1: req.user.username}
+        Meeting.find(function(err, results){
             if (err) {
                 console.log(err);
             } else {
                 //console.log(results)
-                myMeetings = results
+                allMeetings = results
             }
-            res.render("dashboard", {user: req.user.username, meetings: myMeetings})  
+            res.render("dashboard", {user: req.user.username, meetings: allMeetings})  
         })  
     } else {
         res.redirect("/");
     }
+});
+
+//meeting edit route
+app.post("/meetingView", function(req, res){
+    console.log("A user is about to view a meeting")
+
+   req.session.valid = req.body._id
+   res.redirect("/meetup");
 });
 
 //meeting edit route
@@ -190,7 +198,7 @@ app.post("/meetingCreate", function(req, res){
         type: "",
         username1: req.user.username,
         username2: "",
-        date: "2020-01-01T12:00", //Date("<YYYY-mm-ddTHH:MM:ss>")
+        date: "Oct 25",
         description: ""
     }
     Meeting.create(inserts, function(err, results) {
@@ -276,10 +284,49 @@ app.post("/deleteMeeting", function(req, res) {
 app.get("/meetup", function(req, res){
     console.log("A user is accessing meetup")
     if (req.isAuthenticated()) {
-        res.render("meetup", {user: req.user.username})   
+        if (req.session.valid){
+            var meeting_id = req.session.valid
+            req.session.valid = null
+
+            var query = {"_id" : meeting_id};
+            Meeting.find(query, function(err, results) {
+                if (err) {
+                    // failure
+                    console.log(err);
+                } else {
+                    // success
+                    //console.log(results)
+                    meeting = results[0]
+                }
+                res.render("meetup", {user: req.user.username, username1: meeting.username1, type: meeting.type, username2: meeting.username2, description: meeting.description, date: meeting.date, _id: meeting._id})   
+            })
+        } else {
+            console.log("no session valid")
+            res.redirect("/");
+        }
     } else {
+        console.log("not authenticated")
         res.redirect("/");
     }
+    req.session.valid = null
+});
+
+// meetingJoin route
+app.post("/meetingJoin", function(req, res) {
+    console.log("Joining " + req.body.username2 + " to a meetup with id: " + req.body._id);
+    var query = {"_id": req.body._id};
+    var updates = { $set : {username2: req.body.username2}};
+
+    Meeting.updateOne(query, updates, function(err, results) {
+        if (err) {
+            // failure
+            console.log(err);
+        } else {
+            // success
+            //console.log(results)
+        }
+    })
+    res.redirect("/dashboard");
 });
 
 // show the profile page

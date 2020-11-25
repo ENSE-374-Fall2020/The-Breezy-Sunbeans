@@ -70,9 +70,15 @@
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
-      <h1 class="display-3">Hiking</h1>
-      <p>Oct 25</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Join &raquo;</a></p> <!--Add any buttons and details/links-->
+      <h1 class="display-3"><%= type %></h1>
+      <p><%= date %></p>
+      <% if (username2 == ""){ %>
+      <form class="form-update" action="/meetingJoin" method="POST">
+        <input type="hidden" id="inputId" class="form-control" value="<%= _id %>" required name="_id">
+        <input type="hidden" id="inputUserame2" class="form-control" value="<%= user %>" required name="username2">
+        <p><button class="btn btn-primary btn-lg" type="submit">Join &raquo;</button></p> <!--Add any buttons and details/links-->
+      </form>
+      <% } %>
     </div>
   </div>
 
@@ -81,16 +87,22 @@
     <div class="row">
       <div class="col-md-4">
         <svg class="bd-placeholder-img mr-2 rounded" width="40" height="40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-        <strong>@user1</strong>
-        <p>@user1 </p> <!-- Add any profile info about the user-->
+        <strong><%= username1 %> should display the user's actual name here</strong>
+        <p><%= username1 %> </p> <!-- Add any profile info about the user-->
         <p><a class="btn btn-secondary" href="#" role="button"> &raquo;</a></p>
       </div>
         
       <div class="col-md-4">
             <svg class="bd-placeholder-img mr-2 rounded" width="40" height="40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-            <strong>@user2</strong>
-            <p>@user2</p> <!-- Add the profile of the user-->
-            <p><a class="btn btn-secondary" href="#" role="button">&raquo;</a></p> <!-- add any buttons/details/links -->
+            <% if (username2 == ""){ %>
+              <strong>Empty</strong>
+              <p>--</p> <!-- Add the profile of the user-->
+              <p><a class="btn btn-secondary" href="#" role="button">&raquo;</a></p> <!-- add any buttons/details/links -->
+            <% } else { %>
+              <strong><%= username2 %></strong>
+              <p><%= username2 %></p> <!-- Add the profile of the user-->
+              <p><a class="btn btn-secondary" href="#" role="button">&raquo;</a></p> <!-- add any buttons/details/links -->
+            <% } %>
       </div>
     </div>
   </div>
