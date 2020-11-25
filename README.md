@@ -11,6 +11,11 @@ Files you need to add: .env
 
 database is oceanDB
 
+
+TODO
+    change home to be in the views folder and not the views/home folder
+    take out the profilehtml folder from project
+
 User database
     Add photos functionality?
 
@@ -19,13 +24,5 @@ Messaging:
     Page to show messages with a specific user
     
 Meetings database
-    Explore meetings has no funcitonality 
-    Need a new to add a user to a meeting
-
-    Explore meeting will have every other meeting than the ones you are in
-    Clicking on an explore meeting will bring you to the meetup page where you can join if there is one user
 
 
-    change home to be in the views folder
-
-    added in public files
