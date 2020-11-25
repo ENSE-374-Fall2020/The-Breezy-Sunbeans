@@ -13,7 +13,7 @@ const passportLocalMongoose = require("passport-local-mongoose")
 require("dotenv").config();
 
 const app = express();
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // set up session
@@ -30,20 +30,28 @@ app.use(passport.session());
 app.set("view engine", "ejs");
 
 // passport needs to use MongoDB to store users
-mongoose.connect("mongodb://localhost:27017/oceanDB", 
-                {useNewUrlParser: true, // these avoid MongoDB deprecation warnings
-                 useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017/oceanDB",
+    {
+        useNewUrlParser: true, // these avoid MongoDB deprecation warnings
+        useUnifiedTopology: true
+    });
 
 // This is the database where our users will be stored
 // Passport-local-mongoose handles these fields, (username, password), 
 // but you can add additional fields as needed
-const userSchema = new mongoose.Schema ({
+const userSchema = new mongoose.Schema({
     username: String,
     password: String,
     name: String,
     age: Number,
     city: String,
-    description: String
+    description: String,
+    activeSports: Boolean,
+    technology: Boolean,
+    nature: Boolean,
+    food: Boolean,
+    travel: Boolean,
+    pets: Boolean
 })
 
 
@@ -65,7 +73,7 @@ const messageSchema = new mongoose.Schema({
 const Message = mongoose.model("Message", messageSchema);
 
 //Schema for meetings
-const meetingSchema = new mongoose.Schema ({
+const meetingSchema = new mongoose.Schema({
     type: String,
     username1: String,
     username2: String,
@@ -82,43 +90,43 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-const port = 4000; 
+const port = 4000;
 
-app.listen (port, function() {
+app.listen(port, function () {
     // code in here runs when the server starts
     console.log("Server is running on port " + port);
 })
 
 // root route, shows the home page
-app.get("/", function(req, res){
+app.get("/", function (req, res) {
     res.render("home/home")
 });
 
 //show login/register page
-app.get("/login", function(req, res){
+app.get("/login", function (req, res) {
     res.render("login")
 });
 
 // register route
-app.post("/register", function(req, res) {
+app.post("/register", function (req, res) {
     console.log("Registering a new user");
     // calls a passport-local-mongoose function for registering new users
     // expect an error if the user already exists!
-    User.register({username: req.body.username}, req.body.password, function(err, user){
+    User.register({ username: req.body.username }, req.body.password, function (err, user) {
         if (err) {
             console.log(err);
             res.redirect("/")
         } else {
             // authenticate using passport-local
             // what is this double function syntax?! It's called currying.
-            var query = {"username" : req.body.username};
-            var updates = { $set : {name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description}};
-            User.updateOne(query, updates, function(err, res) {
-                    if (err) throw err;
-                }
+            var query = { "username": req.body.username };
+            var updates = { $set: { name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description } };
+            User.updateOne(query, updates, function (err, res) {
+                if (err) throw err;
+            }
             )
             //console.log("updated " + req.body.username + " with " + req.body.name + " and " + req.body.description)//
-            passport.authenticate("local")(req, res, function(){
+            passport.authenticate("local")(req, res, function () {
                 res.redirect("/dashboard")
             });
         }
@@ -126,15 +134,15 @@ app.post("/register", function(req, res) {
 });
 
 // login route
-app.post("/login", function(req, res) {
+app.post("/login", function (req, res) {
     console.log("A user is logging in")
     // create a user
-    const user = new User ({
+    const user = new User({
         username: req.body.username,
         password: req.body.password
-     });
-     // try to log them in
-    req.login (user, function(err) {
+    });
+    // try to log them in
+    req.login(user, function (err) {
         if (err) {
             // failure
             console.log(err);
@@ -142,22 +150,22 @@ app.post("/login", function(req, res) {
         } else {
             // success
             // authenticate using passport-local
-            passport.authenticate("local")(req, res, function() {
-                res.redirect("/dashboard"); 
+            passport.authenticate("local")(req, res, function () {
+                res.redirect("/dashboard");
             });
         }
     });
 });
 
 // logout
-app.get("/logout", function(req, res){
+app.get("/logout", function (req, res) {
     console.log("A user logged out")
     req.logout();
     res.redirect("/");
 })
 
 // show the dashboard
-app.get("/dashboard", function(req, res){
+app.get("/dashboard", function (req, res) {
     console.log("A user is accessing dashboard")
     if (req.isAuthenticated()) {
         //var query = {username1: req.user.username}
@@ -187,12 +195,12 @@ app.post("/meetingView", function(req, res){
 app.post("/meetingEdit", function(req, res){
     console.log("A user is about to edit a meeting")
 
-   req.session.valid = req.body._id
-   res.redirect("/meeting_edit");
+    req.session.valid = req.body._id
+    res.redirect("/meeting_edit");
 });
 
 //meeting create route
-app.post("/meetingCreate", function(req, res){
+app.post("/meetingCreate", function (req, res) {
     console.log("A user is accessing creating a meeting")
     var inserts = {
         type: "",
@@ -201,7 +209,7 @@ app.post("/meetingCreate", function(req, res){
         date: "Oct 25",
         description: ""
     }
-    Meeting.create(inserts, function(err, results) {
+    Meeting.create(inserts, function (err, results) {
         if (err) {
             // failure
             console.log(err);
@@ -216,15 +224,15 @@ app.post("/meetingCreate", function(req, res){
 });
 
 // show the meeting edit page. Must have a meeting id in req.session.valid
-app.get("/meeting_edit", function(req, res){
+app.get("/meeting_edit", function (req, res) {
     console.log("A user is accessing meeting edit")
     if (req.isAuthenticated()) {
-        if (req.session.valid){
+        if (req.session.valid) {
             var meeting_id = req.session.valid
             req.session.valid = null
 
-            var query = {"_id" : meeting_id};
-            Meeting.find(query, function(err, results) {
+            var query = { "_id": meeting_id };
+            Meeting.find(query, function (err, results) {
                 if (err) {
                     // failure
                     console.log(err);
@@ -233,7 +241,7 @@ app.get("/meeting_edit", function(req, res){
                     //console.log(results)
                     meeting = results[0]
                 }
-                res.render("meeting_edit", {user: meeting.username1, type: meeting.type, username2: meeting.username2, description: meeting.description, date: meeting.date, _id: meeting._id})   
+                res.render("meeting_edit", { user: meeting.username1, type: meeting.type, username2: meeting.username2, description: meeting.description, date: meeting.date, _id: meeting._id })
             })
         } else {
             res.redirect("/");
@@ -245,13 +253,13 @@ app.get("/meeting_edit", function(req, res){
 });
 
 // updateMeeting route
-app.post("/updateMeeting", function(req, res) {
+app.post("/updateMeeting", function (req, res) {
     console.log("Updating a meeting");
     //console.log("user1 is: " + req.body.username + " username2: " + req.body.username2 + " description: " + req.body.description + " date: " + req.body.date)
-    var query = {"_id": req.body._id};
-    var updates = { $set : {type: req.body.type, username1: req.body.username, username2: req.body.username2, description: req.body.description, date: req.body.date}};
+    var query = { "_id": req.body._id };
+    var updates = { $set: { type: req.body.type, username1: req.body.username, username2: req.body.username2, description: req.body.description, date: req.body.date } };
 
-    Meeting.updateOne(query, updates, function(err, results) {
+    Meeting.updateOne(query, updates, function (err, results) {
         if (err) {
             // failure
             console.log(err);
@@ -264,11 +272,11 @@ app.post("/updateMeeting", function(req, res) {
 });
 
 // deleteMeeting route
-app.post("/deleteMeeting", function(req, res) {
+app.post("/deleteMeeting", function (req, res) {
     console.log("Deleteing a meeting");
-    var query = {"_id": req.body._id};
+    var query = { "_id": req.body._id };
 
-    Meeting.deleteOne(query, function(err, results) {
+    Meeting.deleteOne(query, function (err, results) {
         if (err) {
             // failure
             console.log(err);
@@ -281,7 +289,7 @@ app.post("/deleteMeeting", function(req, res) {
 });
 
 // show the meetup page
-app.get("/meetup", function(req, res){
+app.get("/meetup", function (req, res) {
     console.log("A user is accessing meetup")
     if (req.isAuthenticated()) {
         if (req.session.valid){
@@ -330,34 +338,32 @@ app.post("/meetingJoin", function(req, res) {
 });
 
 // show the profile page
-app.get("/profile", function(req, res){
+app.get("/profile", function (req, res) {
     console.log("A user is accessing profile")
     if (req.isAuthenticated()) {
-        User.find({"username": req.user.username}, function(err, results){
+        User.find({ "username": req.user.username }, function (err, results) {
             if (err) {
                 console.log(err);
             } else {
                 //console.log(results)
                 userInfo = results[0];
-
             }
-            res.render("profile", {user: req.user.username, userInfo: userInfo})   
-        }) 
+            res.render("profile", { user: req.user.username, userInfo: userInfo })
+        })
     } else {
         res.redirect("/");
     }
-
 });
 
 // updateProfile route
-app.post("/updateProfile", function(req, res) {
+app.post("/updateProfile", function (req, res) {
     console.log("Updating a user");
     //console.log("user is: " + req.body.username + " name: " + req.body.name + " age: " + req.body.age + " city: " + req.body.city + " description: " + req.body.description)
-    var query = {"username" : req.body.username};
-    var updates = { $set : {name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description}};
-    User.updateOne(query, updates, function(err, res) {
-            if (err) throw err;
-        }
+    var query = { "username": req.body.username };
+    var updates = { $set: { name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description, activeSports: req.body.activeSports, technology: req.body.technology, nature: req.body.nature, food: req.body.food, travel: req.body.travel, pets: req.body.pets}};
+    User.updateOne(query, updates, function (err, res) {
+        if (err) throw err;
+    }
     )
     res.redirect("/profile");
 });
@@ -381,7 +387,7 @@ app.get("/messaging", function (req, res) {
                 message: messageArray
             })
             console.log(message)
-            
+
         })
     } else {
         res.redirect("/");
