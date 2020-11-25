@@ -16,13 +16,13 @@ TODO
     change home to be in the views folder and not the views/home folder
     take out the profilehtml folder from project
 
-User database
+User database:
     Add photos functionality?
 
 Messaging:
     Add a way to select a user to send a message to
     Page to show messages with a specific user
     
-Meetings database
+Meetings database:
 
 
