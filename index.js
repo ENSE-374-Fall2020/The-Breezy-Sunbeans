@@ -99,7 +99,7 @@ app.listen(port, function () {
 
 // root route, shows the home page
 app.get("/", function (req, res) {
-    res.render("home/home")
+    res.render("home")
 });
 
 //show login/register page
