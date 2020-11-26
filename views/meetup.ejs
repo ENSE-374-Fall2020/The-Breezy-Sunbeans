@@ -12,7 +12,7 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Jekyll v4.1.1" />
-    <title>Jumbotron Template · Bootstrap</title>
+    <title>Ocean</title>
 
     <!-- CSS -->
     <link rel="canonical" href="css/cover.css" />
@@ -124,5 +124,12 @@
           <p><a class="btn btn-secondary" href="#" role="button">&raquo;</a></p> <!-- add any buttons/details/links -->
         <% } %>
     </div>
+
+    <% if ((username1 == user) || (username2 == user)) { %>
+    <form class="centred" action="/meetingEdit" method="POST">
+      <input type="hidden" id="inputId" class="form-control" value="<%= _id %>" required name="_id">
+      <button class="btn btn-secondary" type="submit">Edit</button>
+  </form> 
+  <% } %>
   </body>
 </html>
