@@ -296,8 +296,8 @@ app.get("/meetup", function (req, res) {
             var meeting_id = req.session.valid
             req.session.valid = null
 
-            var query = { "_id": meeting_id };
-            Meeting.find(query, function (err, results) {
+            var meetingQuery = { "_id": meeting_id };
+            Meeting.find(meetingQuery, function (err, results) {
                 if (err) {
                     // failure
                     console.log(err);
@@ -306,7 +306,33 @@ app.get("/meetup", function (req, res) {
                     //console.log(results)
                     meeting = results[0]
                 }
-                res.render("meetup", { user: req.user.username, username1: meeting.username1, type: meeting.type, username2: meeting.username2, description: meeting.description, date: meeting.date, _id: meeting._id })
+                var user1Query = { "username": meeting.username1 };
+                User.find(user1Query, function (err, results) {
+                    if (err) {
+                        // failure
+                        console.log(err);
+                    } else {
+                        // success
+                        //console.log(results)
+                        user1Name = results[0].name
+                    }
+                    if (meeting.username2 == ""){
+                        res.render("meetup", { user: req.user.username, username1: meeting.username1, user1Name: user1Name, username2: meeting.username2, type: meeting.type, description: meeting.description, date: meeting.date, _id: meeting._id })
+                    }else{
+                        var user2Query = { "username": meeting.username2 };
+                        User.find(user2Query, function (err, results) {
+                            if (err) {
+                                // failure
+                                console.log(err);
+                            } else {
+                                // success
+                                //console.log(results)
+                                user2Name = results[0].name
+                            }
+                            res.render("meetup", { user: req.user.username, username1: meeting.username1, user1Name: user1Name, username2: meeting.username2, user2Name: user2Name, type: meeting.type, description: meeting.description, date: meeting.date, _id: meeting._id })
+                        })
+                    }
+                })
             })
         } else {
             console.log("no session valid")

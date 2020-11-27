@@ -107,7 +107,8 @@
     <div class="row">
       <div class="col-md-4">
         <svg class="bd-placeholder-img mr-2 rounded" width="40" height="40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-        <strong><%= username1 %> </strong><br><br>
+        <strong><%= user1Name %> </strong><br>
+        <%= username1 %><br><br>
         <form action="/viewprofile" method="POST">
           <input type="hidden" name="username" value=<%= username1 %>>
           <input type="submit" class="btn btn-secondary" value="View <%= username1 %>'s profile!">
@@ -118,8 +119,10 @@
         <svg class="bd-placeholder-img mr-2 rounded" width="40" height="40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
         <% if (username2 == ""){ %>
           <strong>Empty</strong>
+          ---
         <% } else { %>
-          <strong><%= username2 %></strong><br><br>
+          <strong><%= user2Name %></strong><br>
+          <%= username2 %><br><br>
           <form action="/viewprofile" method="POST">
             <input type="hidden" name="username" value=<%= username2 %>>
             <input type="submit" class="btn btn-secondary" value="View <%= username2 %>'s profile!">
