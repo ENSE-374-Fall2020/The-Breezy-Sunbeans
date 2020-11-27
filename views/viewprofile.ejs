@@ -44,11 +44,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/messaging">My Messages</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="/profile">My Profile</a>
           </li>
         </ul>
-        <div class="float-right">Logged in as <%= user%></div>
+        <div class="float-right">Logged in as <%= user %></div>
         <div class="float-right">
           <form class="form-signin" action="/logout" method="GET">
             <button class="btn btn-secondary" type="submit">Log Out</button>
@@ -58,91 +58,91 @@
     </nav>
 
     <div class="centered" style="background-color: #eee">
-      <form class="form-update" action="/updateMeeting" method="POST">
+      <form class="form-update">
         <input
           type="hidden"
           id="inputUserame"
           class="form-control"
           value="<%= user %>"
-          required
           name="username"
-        />
-        <input
-          type="hidden"
-          id="inputUserame2"
-          class="form-control"
-          value="<%= username2 %>"
-          required
-          name="username2"
-        />
-        <input
-          type="hidden"
-          id="inputId"
-          class="form-control"
-          value="<%= _id %>"
-          required
-          name="_id"
         />
         <div class="card">
           <div class="card-body">
-            <% if(username2 == ""){ %>
-            <h4 class="card-title">Meeting between <%= user %> and ---</h4>
-            <% } else { %>
-            <h4 class="card-title">
-              Meeting between <%= user %> and <%= username2 %>
-            </h4>
-            <% } %>
-            <h6 class="card-subtitle mb-2 text-muted">Type</h6>
+            <h4 class="card-title">Viewing <%= userInfo.name %>'s profile</h4>
+            <input
+              type="hidden"
+              id="inputName"
+              class="form-control"
+              value="<%= userInfo.name %>"
+              name="name"
+            />
+            <h6 class="card-subtitle mb-2 text-muted">My age:</h6>
             <p class="card-text">
               <input
                 type="text"
-                id="inputType"
+                id="inputAge"
                 class="form-control"
-                placeholder="What type of meeting is this?"
-                value="<%= type %>"
-                required
-                name="type"
+                placeholder="Your age"
+                value="<%= userInfo.age %>"
+                name="age"
+                readonly
               />
             </p>
-            <h6 class="card-subtitle mb-2 text-muted">Description</h6>
+            <h6 class="card-subtitle mb-2 text-muted">My city:</h6>
+            <p class="card-text">
+              <input
+                type="text"
+                id="inputCity"
+                class="form-control"
+                placeholder="City you live in"
+                value="<%= userInfo.city %>"
+                name="city"
+                readonly
+              />
+            </p>
+            <h6 class="card-subtitle mb-2 text-muted">My description:</h6>
             <p class="card-text">
               <input
                 type="text"
                 id="inputDescription"
                 class="form-control"
-                placeholder="A short description of your meeting!"
-                value="<%= description %>"
-                required
+                placeholder="A short description of yourself!"
+                value="<%= userInfo.description %>"
                 name="description"
+                readonly
               />
             </p>
-            <h6 class="card-subtitle mb-2 text-muted">Date:</h6>
-            <p class="card-text">
-              <input
-                type="text"
-                id="inputDate"
-                class="form-control"
-                value="<%= date %>"
-                required
-                name="date"
-              />
-            </p>
-            <button class="btn btn-secondary btn-block" type="submit">
-              Submit
-            </button>
+            <h6 class="card-subtitle mb-2 text-muted">My Interests:</h6>
+            <input
+              type="checkbox"
+              name="activeSports"
+              value="<%= userInfo.activeSports %>"
+            />
+            <label> Active Sports</label>
+            <input
+              type="checkbox"
+              name="technology"
+              value="<%= userInfo.technology %>"
+            />
+            <label> Technology</label>
+            <input
+              type="checkbox"
+              name="nature"
+              value="<%= userInfo.nature %>"
+            />
+            <label> Nature</label>
+            <input type="checkbox" name="food" value="<%= userInfo.food %>" />
+            <label> Food</label>
+            <input
+              type="checkbox"
+              name="travel"
+              value="<%= userInfo.travel %>"
+            />
+            <label> Travel</label>
+            <input type="checkbox" name="pets" value="<%= userInfo.pets %>" />
+            <label> Pets</label>
           </div>
         </div>
-      </form>
-      <form action="/deleteMeeting" method="POST">
-        <input
-          type="hidden"
-          id="inputId"
-          class="form-control"
-          value="<%= _id %>"
-          required
-          name="_id"
-        />
-        <button type="submit" class="btn btn-danger">Delete</button>
       </form>
     </div>
 
