@@ -15,7 +15,7 @@ database is oceanDB
 TODO
     take out the profilehtml folder from project
 
-    Dashboard: why is there a meetup button, where deos that go?
+    Dashboard:
         Change colour of blue square on Explore meetings to be diffent than that of My Meetings
 
 User:
