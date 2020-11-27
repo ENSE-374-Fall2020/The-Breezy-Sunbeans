@@ -63,24 +63,21 @@
       <div class="p-2 w-100 flex-fill">
         <h4 class="card-title">My Messages</h4>
         <div class="messages">
-          <% message.forEach(function(message) { %> <%
-          if(message.creator.username == username) { %> <%-
-          include('partials/mesent', {_id: message._id, message:
-          message.message}) -%> <% } else if(message.creator.username !=
-          username) { %> <%- include('partials/othersent', {_id: message._id,
-          message: message.message, creator: message.creator}) -%> <% } %> <%
-          }); %>
+          <% message.forEach(function(message) { %> 
+            <% if(message.creator.username == username) { %> 
+            <%- include('partials/mesent', {_id: message._id, message: message.message}) -%> 
+          <% } else if(message.creator.username != username) { %> 
+            <%- include('partials/othersent', {_id: message._id, message: message.message, creator: message.creator}) -%> 
+          <% } %> 
+          <% }); %>
 
           <!-- send a message -->
           <form action="/send" method="POST">
-            <input type="hidden" name="username" value="<%" ="username" % />>
+            <input type="hidden" name="username" value=<%= username %>>
             <input
               type="hidden"
               name="messagelength"
-              value="<%"
-              ="message.length"
-              %
-            />>
+              value= <%= message.length %>>
             <div class="input-group mb-3">
               <input
                 type="text"
