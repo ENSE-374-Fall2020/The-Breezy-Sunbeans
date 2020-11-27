@@ -267,8 +267,8 @@ app.post("/updateMeeting", function (req, res) {
             // success
             //console.log(results)
         }
+        res.redirect("/dashboard");
     })
-    res.redirect("/dashboard");
 });
 
 // deleteMeeting route
@@ -284,8 +284,8 @@ app.post("/deleteMeeting", function (req, res) {
             // success
             //console.log(results)
         }
+        res.redirect("/dashboard");
     })
-    res.redirect("/dashboard");
 });
 
 // show the meetup page
@@ -359,8 +359,8 @@ app.post("/meetingJoin", function (req, res) {
             // success
             //console.log(results)
         }
+        res.redirect("/dashboard");
     })
-    res.redirect("/dashboard");
 });
 
 // show the profile page
@@ -405,11 +405,11 @@ app.post("/updateProfile", function (req, res) {
     //console.log("user is: " + req.body.username + " name: " + req.body.name + " age: " + req.body.age + " city: " + req.body.city + " description: " + req.body.description)
     var query = { "username": req.body.username };
     var updates = { $set: { name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description, activeSports: req.body.activeSports, technology: req.body.technology, nature: req.body.nature, food: req.body.food, travel: req.body.travel, pets: req.body.pets } };
-    User.updateOne(query, updates, function (err, res) {
+    User.updateOne(query, updates, function (err, results) {
         if (err) throw err;
-    }
-    )
-    res.redirect("/profile");
+
+        res.redirect("/profile");
+    })
 });
 
 

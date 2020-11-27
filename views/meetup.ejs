@@ -92,7 +92,7 @@
     <div class="container">
       <h1 class="display-3"><%= type %></h1>
       <p><%= date %></p>
-      <% if (username2 == ""){ %>
+      <% if ((username2 == "") && username1 != user){ %>
       <form class="form-update" action="/meetingJoin" method="POST">
         <input type="hidden" id="inputId" class="form-control" value="<%= _id %>" required name="_id">
         <input type="hidden" id="inputUserame2" class="form-control" value="<%= user %>" required name="username2">
