@@ -355,6 +355,24 @@ app.get("/profile", function (req, res) {
     }
 });
 
+// View someone else's profile 
+app.post("/viewprofile", function (req, res) {
+    console.log("A user is viewing someone else's profile")
+    if (req.isAuthenticated()) {
+        User.find({ "username": req.body.username }, function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                //console.log(results)
+                userInfo = results[0];
+            }
+            res.render("viewprofile", { user: req.user.username, userInfo: userInfo })
+        })
+    } else {
+        res.redirect("/");
+    }
+});
+
 // updateProfile route
 app.post("/updateProfile", function (req, res) {
     console.log("Updating a user");

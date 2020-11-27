@@ -31,3 +31,7 @@ Meetings:
         if user1 leaves meeting, change user2 to become user1
         can leave a meeting if there are more than one people in the meeting
 
+Hayden (nov/26)
+Changes:
+-removed the username showing up twice 
+-Changed the name of the user showing up instead of the username 
