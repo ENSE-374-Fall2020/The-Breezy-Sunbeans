@@ -110,6 +110,7 @@ app.get("/login", function (req, res) {
 // register route
 app.post("/register", function (req, res) {
     console.log("Registering a new user");
+    console.log("Registering a new user");
     // calls a passport-local-mongoose function for registering new users
     // expect an error if the user already exists!
     User.register({ username: req.body.username }, req.body.password, function (err, user) {

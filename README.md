@@ -14,6 +14,7 @@ database is oceanDB
 TODO
 
 User:
+Does intrests work?
 Add photos functionality?
 
 Messaging:
@@ -21,6 +22,9 @@ Messaging:
     Page to show messages with a specific user
 
 Meetings:
+    Add functionaltiy to find all users with same inertests as you, pick a random one, and satrt a meeting witht hem
+        So createMeeting, but with preset user2 and type
+
     add ability to leave a meeting instead of delete
         if user1 leaves meeting, change user2 to become user1
         can leave a meeting if there are more than one people in the meeting
