@@ -1,5 +1,8 @@
 Read me file for Breezy Sunbeams ENSE 374 project
 
+# Complete project
+Files and installation instructions can be found in the 'main' branch
+
 # Members
 Bryden Trakalo, Hayden Jin, Dhruv Modi, Ziwen Tan
 
