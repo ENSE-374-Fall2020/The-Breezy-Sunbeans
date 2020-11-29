@@ -46,14 +46,13 @@ const userSchema = new mongoose.Schema({
     age: Number,
     city: String,
     description: String,
-    activeSports: Boolean,
-    technology: Boolean,
-    nature: Boolean,
-    food: Boolean,
-    travel: Boolean,
-    pets: Boolean
+    activeSports: { type: Boolean, required: true, default: false },
+    technology: { type: Boolean, required: true, default: false },
+    nature: { type: Boolean, required: true, default: false },
+    food: { type: Boolean, required: true, default: false },
+    travel: { type: Boolean, required: true, default: false },
+    pets: { type: Boolean, required: true, default: true }
 })
-
 
 // configure passportLocalMongoose
 userSchema.plugin(passportLocalMongoose);
