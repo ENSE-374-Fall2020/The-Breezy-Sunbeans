@@ -112,35 +112,21 @@
                 readonly
               />
             </p>
-            <h6 class="card-subtitle mb-2 text-muted">Interests:</h6>
-            <input
-              type="checkbox"
-              name="activeSports"
-              value="<%= userInfo.activeSports %>"
-            />
-            <label> Active Sports</label>
-            <input
-              type="checkbox"
-              name="technology"
-              value="<%= userInfo.technology %>"
-            />
-            <label> Technology</label>
-            <input
-              type="checkbox"
-              name="nature"
-              value="<%= userInfo.nature %>"
-            />
-            <label> Nature</label>
-            <input type="checkbox" name="food" value="<%= userInfo.food %>" />
-            <label> Food</label>
-            <input
-              type="checkbox"
-              name="travel"
-              value="<%= userInfo.travel %>"
-            />
-            <label> Travel</label>
-            <input type="checkbox" name="pets" value="<%= userInfo.pets %>" />
-            <label> Pets</label>
+            <h6 style="margin: 5px" class="card-subtitle mb-2 text-muted">
+              My Interests:
+            </h6>
+            <input type="checkbox" id="" onclick="return false;" name="activeSports" <% if (userInfo.activeSports) { %> checked <% } %>/>
+            <label for="interests"> Active Sports</label>
+            <input type="checkbox" id="" onclick="return false;" name="technology" <% if (userInfo.technology) { %> checked <% } %>/>
+            <label for="interests"> Technology</label>
+            <input type="checkbox" id="" onclick="return false;" name="nature" <% if (userInfo.nature) { %> checked <% } %>/>
+            <label for="interests"> Nature</label>
+            <input type="checkbox" id="" onclick="return false;" name="food" <% if (userInfo.food) { %> checked <% } %> />
+            <label for="interests"> Food</label>
+            <input type="checkbox" id="" onclick="return false;" name="travel" <% if (userInfo.travel) { %> checked <% } %>/>
+            <label for="interests"> Travel</label>
+            <input type="checkbox" id="" onclick="return false;" name="pets" <% if (userInfo.pets) { %> checked <% } %>/>
+            <label for="interests"> Pets</label>
           </div>
         </div>
       </form>
