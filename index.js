@@ -509,7 +509,7 @@ app.get("/match", function (req, res) {
                         console.log("Random number for suer is " + randomUser)
                         userInfo2 = results[randomUser];
                     }
-                    res.render("match", { user: req.user.username, match: match, userInfo: userInfo, userInfo2: userInfo2 })
+                    res.render("match", { user: req.user.username, match: match, interest: interestToSearch, userInfo: userInfo, userInfo2: userInfo2 })
                 });
             }else {
                 match = ""
