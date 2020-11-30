@@ -46,12 +46,12 @@ const userSchema = new mongoose.Schema({
     age: Number,
     city: String,
     description: String,
-    activeSports: { type: Boolean, required: true, default: false },
-    technology: { type: Boolean, required: true, default: false },
-    nature: { type: Boolean, required: true, default: false },
-    food: { type: Boolean, required: true, default: false },
-    travel: { type: Boolean, required: true, default: false },
-    pets: { type: Boolean, required: true, default: true }
+    activeSports: String,
+    technology: String,
+    nature: String,
+    food: String,
+    travel: String,
+    pets: String
 })
 
 // configure passportLocalMongoose
@@ -109,7 +109,6 @@ app.get("/login", function (req, res) {
 // register route
 app.post("/register", function (req, res) {
     console.log("Registering a new user");
-    console.log("Registering a new user");
     // calls a passport-local-mongoose function for registering new users
     // expect an error if the user already exists!
     User.register({ username: req.body.username }, req.body.password, function (err, user) {
@@ -119,8 +118,9 @@ app.post("/register", function (req, res) {
         } else {
             // authenticate using passport-local
             // what is this double function syntax?! It's called currying.
+            //console.log("activeSports: " + req.body.activeSports + " technology: " + req.body.technology)
             var query = { "username": req.body.username };
-            var updates = { $set: { name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description } };
+            var updates = { $set: { name: req.body.name, age: req.body.age, city: req.body.city, description: req.body.description, activeSports: req.body.activeSports, technology: req.body.technology, nature: req.body.nature, food: req.body.food, travel: req.body.travel, pets: req.body.pets } };
             User.updateOne(query, updates, function (err, res) {
                 if (err) throw err;
             }
@@ -168,7 +168,6 @@ app.get("/logout", function (req, res) {
 app.get("/dashboard", function (req, res) {
     console.log("A user is accessing dashboard")
     if (req.isAuthenticated()) {
-        //var query = {username1: req.user.username}
         Meeting.find(function (err, results) {
             if (err) {
                 console.log(err);
@@ -450,4 +449,74 @@ app.post("/send", function (req, res) {
         console.log(req.body.messagelength)
         res.redirect('/messaging');
     });
+});
+
+// show the match page
+app.get("/match", function (req, res) {
+    console.log("A user is matching")
+    if (req.isAuthenticated()) {
+        User.find({ "username": req.user.username }, function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                //console.log(results)
+                userInfo = results[0];
+            }
+            if (userInfo.activeSports || userInfo.technology || userInfo.nature || userInfo.food || userInfo.travel || userInfo.pets){
+                match = "on"
+                var interestArray = []
+                var interestCounter = 0
+                if (userInfo.activeSports){
+                    interestArray[interestCounter] = "activeSports"
+                    //interestArray.push("activeSports")
+                    interestCounter++
+                }if (userInfo.technology){
+                    interestArray[interestCounter] = "technology"
+                    //interestArray.push("technology")
+                    interestCounter++
+                }if (userInfo.nature){
+                    interestArray[interestCounter] = "nature"
+                    //interestArray.push("nature")
+                    interestCounter++
+                }if (userInfo.food){
+                    interestArray[interestCounter] = "food"
+                    //interestArray.push("food")
+                    interestCounter++
+                }if (userInfo.travel){
+                    interestArray[interestCounter] = "travel"
+                    //interestArray.push("travel")
+                    interestCounter++
+                }if (userInfo.pets){
+                    interestArray[interestCounter] = "pets"
+                    //interestArray.push("pets")
+                    interestCounter++
+                }
+                console.log("My array is: " + interestArray)
+                var interestToMatch = Math.floor((Math.random() * interestCounter)); //returns a number between interestCounter and 0
+                var interestToSearch = interestArray[interestToMatch]
+                console.log("Interest to seach is " + interestToSearch)
+
+                var value = "on";
+                var interestQuery = {};
+                interestQuery[interestToSearch] = value;
+                console.log("interestQuery is " + interestQuery[0])
+                User.find(interestQuery, function (err, results) { 
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(results)
+                        var randomUser = Math.floor((Math.random() * results.length));
+                        console.log("Random number for suer is " + randomUser)
+                        userInfo2 = results[randomUser];
+                    }
+                    res.render("match", { user: req.user.username, match: match, userInfo: userInfo, userInfo2: userInfo2 })
+                });
+            }else {
+                match = ""
+                res.render("match", { user: req.user.username, match: match, userInfo: userInfo })
+            }
+        })
+    } else {
+        res.redirect("/");
+    }
 });
