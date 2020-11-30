@@ -93,6 +93,14 @@
     <div class="container">
       <h1 class="display-3">Your match</h1>
       <p>You and <%= userInfo2.name %> both like: <div class="text-capitalize"><%= interest %></div></p>
+      <% if (userInfo.username != userInfo2.username) { %>
+        <form class="form-update" action="/matchCreate" method="POST">
+          <input type="hidden" id="inputUserame" class="form-control" value="<%= user %>" required name="username">
+          <input type="hidden" id="inputUserame2" class="form-control" value="<%= userInfo2.username  %>" required name="username2">
+          <input type="hidden" id="inputUserame" class="form-control" value="<%= interest %>" required name="interest">
+          <p><button class="btn btn-primary btn-lg" type="submit">Make a meeting &raquo;</button></p> <!--Add any buttons and details/links-->
+        </form>
+      <% } %>
     </div>
   </div>
 </div>
@@ -114,12 +122,13 @@
           <strong><%= userInfo2.name %></strong><br>
           <%= userInfo2.username %><br><br>
           <% if (userInfo.username == userInfo2.username) { %>
-              Oops this is you, try again
-            <% } %>
+              Oops this is you, <input class="btn btn-secondary" value="Try again" onClick="window.location.reload();">
+            <% } else { %>
           <form action="/viewprofile" method="POST">
             <input type="hidden" name="username" value=<%= userInfo2.username %>>
             <input type="submit" class="btn btn-secondary" value="View <%= userInfo2.username %>'s profile!">
           </form>
+          <% } %>
         </div>
     <% } else { %>
         NO interests listed to match with 

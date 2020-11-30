@@ -491,22 +491,22 @@ app.get("/match", function (req, res) {
                     //interestArray.push("pets")
                     interestCounter++
                 }
-                console.log("My array is: " + interestArray)
+                //console.log("My array is: " + interestArray)
                 var interestToMatch = Math.floor((Math.random() * interestCounter)); //returns a number between interestCounter and 0
                 var interestToSearch = interestArray[interestToMatch]
-                console.log("Interest to seach is " + interestToSearch)
+                //console.log("Interest to seach is " + interestToSearch)
 
                 var value = "on";
                 var interestQuery = {};
                 interestQuery[interestToSearch] = value;
-                console.log("interestQuery is " + interestQuery[0])
+                //console.log("interestQuery is " + interestQuery[0])
                 User.find(interestQuery, function (err, results) { 
                     if (err) {
                         console.log(err);
                     } else {
-                        console.log(results)
+                        //console.log(results)
                         var randomUser = Math.floor((Math.random() * results.length));
-                        console.log("Random number for suer is " + randomUser)
+                        //console.log("Random number for suer is " + randomUser)
                         userInfo2 = results[randomUser];
                     }
                     res.render("match", { user: req.user.username, match: match, interest: interestToSearch, userInfo: userInfo, userInfo2: userInfo2 })
@@ -519,4 +519,28 @@ app.get("/match", function (req, res) {
     } else {
         res.redirect("/");
     }
+});
+
+//match create route
+app.post("/matchCreate", function (req, res) {
+    console.log("A user is accessing creating a meeting")
+    var inserts = {
+        type: "",
+        username1: req.user.username,
+        username2: req.body.username2,
+        date: "Oct 25",
+        description: "You both like: " + req.body.interest
+    }
+    Meeting.create(inserts, function (err, results) {
+        if (err) {
+            // failure
+            console.log(err);
+        } else {
+            // success
+            //console.log(results)
+            var meeting_id = results._id
+            req.session.valid = meeting_id;
+            res.redirect("/meeting_edit");
+        }
+    });
 });
