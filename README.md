@@ -1,8 +1,25 @@
 # Installation Instructions
-*Download all of the files from github
+##Download all of the files from github
+-From branch main, https://github.com/dhruvkmodi/ENSE374_TheBreezySunbeans/tree/main
 
-*Install all of the required modules required to run this software stack (npm install, etc)
+##Initialize all nodeJS requirements
+-npm init
+-npm i express
+-npm i -g nodemon
+-npm i ejs
+-npm i mongoose
+-npm i dotenv
+-npm i express-session, Required me to create path node_modules\random-bytes\package.json
+-npm i passport
+-npm i passport-local-mongoose
 
-*Run node index.js 
+###Create secert
+-Make a file named .env in main directory
+-Enter line `SECRET=ThisIsAMoreSecureSecret!` into the file
 
-*Application will run on local host 4000, access it with your browser of choice 
+##Run application
+-Start mongoDB connection with `mongod` in a terminal
+-Use command `node index.js`, or `nodemon` to run server
+
+##View application
+-Enter `http://localhost:4000` into web browser of choice
