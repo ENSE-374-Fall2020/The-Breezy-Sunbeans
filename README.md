@@ -1,3 +1,9 @@
+# Installation Requirements
+- MongoDB installed on device running application, can be found at https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+- - Should also `Set-Alias mongod "C:\Program Files\MongoDB\Server\4.4\bin\mongod.exe"`
+- Node installed on device, can be found at https://nodejs.org/en/
+- Access to and basic knowledge of how to use termial commands
+
 # Installation Instructions
 ## Download all of the files from github
 - From branch main, https://github.com/dhruvkmodi/ENSE374_TheBreezySunbeans/tree/main
@@ -14,7 +20,7 @@
 - npm i passport
 - npm i passport-local-mongoose
 
-### Create secert
+## Create secret
 - Make a file named .env in main directory
 - Enter line `SECRET=ThisIsAMoreSecureSecret!` into the file
 
