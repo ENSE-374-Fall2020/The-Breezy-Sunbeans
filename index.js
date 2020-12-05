@@ -1,4 +1,3 @@
-
 // add all your boilerplate code up here
 const express = require("express")
 const bodyParser = require("body-parser")
@@ -90,7 +89,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 const port = 4000;
-
 app.listen(port, function () {
     // code in here runs when the server starts
     console.log("Server is running on port " + port);
@@ -198,7 +196,7 @@ app.post("/meetingEdit", function (req, res) {
     res.redirect("/meeting_edit");
 });
 
-//meeting create route
+//meeting create route, creates a meeting in the database and sends the id to meeting_edit
 app.post("/meetingCreate", function (req, res) {
     console.log("A user is accessing creating a meeting")
     var inserts = {
@@ -295,6 +293,7 @@ app.get("/meetup", function (req, res) {
             var meeting_id = req.session.valid
             req.session.valid = null
 
+            //Get the meeting inforamtion, inclucing username1 and username2
             var meetingQuery = { "_id": meeting_id };
             Meeting.find(meetingQuery, function (err, results) {
                 if (err) {
@@ -305,6 +304,7 @@ app.get("/meetup", function (req, res) {
                     //console.log(results)
                     meeting = results[0]
                 }
+                //find info on username1
                 var user1Query = { "username": meeting.username1 };
                 User.find(user1Query, function (err, results) {
                     if (err) {
@@ -318,6 +318,7 @@ app.get("/meetup", function (req, res) {
                     if (meeting.username2 == ""){
                         res.render("meetup", { user: req.user.username, username1: meeting.username1, user1Name: user1Name, username2: meeting.username2, type: meeting.type, description: meeting.description, date: meeting.date, _id: meeting._id })
                     }else{
+                        //find info on username2
                         var user2Query = { "username": meeting.username2 };
                         User.find(user2Query, function (err, results) {
                             if (err) {
@@ -464,34 +465,30 @@ app.get("/match", function (req, res) {
             }
             if (userInfo.activeSports || userInfo.technology || userInfo.nature || userInfo.food || userInfo.travel || userInfo.pets){
                 match = "on"
+                //create an array of all of the interests the user has
                 var interestArray = []
                 var interestCounter = 0
                 if (userInfo.activeSports){
                     interestArray[interestCounter] = "activeSports"
-                    //interestArray.push("activeSports")
                     interestCounter++
                 }if (userInfo.technology){
                     interestArray[interestCounter] = "technology"
-                    //interestArray.push("technology")
                     interestCounter++
                 }if (userInfo.nature){
                     interestArray[interestCounter] = "nature"
-                    //interestArray.push("nature")
                     interestCounter++
                 }if (userInfo.food){
                     interestArray[interestCounter] = "food"
-                    //interestArray.push("food")
                     interestCounter++
                 }if (userInfo.travel){
                     interestArray[interestCounter] = "travel"
-                    //interestArray.push("travel")
                     interestCounter++
                 }if (userInfo.pets){
                     interestArray[interestCounter] = "pets"
-                    //interestArray.push("pets")
                     interestCounter++
                 }
                 //console.log("My array is: " + interestArray)
+                //pick a random interest from that array
                 var interestToMatch = Math.floor((Math.random() * interestCounter)); //returns a number between interestCounter and 0
                 var interestToSearch = interestArray[interestToMatch]
                 //console.log("Interest to seach is " + interestToSearch)
@@ -500,6 +497,7 @@ app.get("/match", function (req, res) {
                 var interestQuery = {};
                 interestQuery[interestToSearch] = value;
                 //console.log("interestQuery is " + interestQuery[0])
+                //search for other users with that same interest
                 User.find(interestQuery, function (err, results) { 
                     if (err) {
                         console.log(err);
