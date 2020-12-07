@@ -2,6 +2,7 @@ Read me file for Breezy Sunbeams ENSE 374 project
 
 # Complete project
 Files and installation instructions can be found in the 'main' branch
+https://github.com/dhruvkmodi/ENSE374_TheBreezySunbeans/tree/main
 
 # Members
 Bryden Trakalo, Hayden Jin, Dhruv Modi, Ziwen Tan
